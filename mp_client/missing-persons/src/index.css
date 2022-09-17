@@ -7,6 +7,14 @@ body{
   background-color: #EEF2F4;
 }
 
+#banner-section{
+  background-image: url(./assets/lost-banner.jpg);
+  text-align: center;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+}
+
 .card-image-layer{
   background-color: rgb(201, 201, 201);
   /* background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%); */

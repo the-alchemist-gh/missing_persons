@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { NavLink,useNavigate } from "react-router-dom";
-import NavButton from "./NavButton";
+
 // import NewItem from "./NewItem";
 
 function Navbar({sendSearchValue, loginName, isLoggedIn}){
@@ -109,7 +109,7 @@ function Navbar({sendSearchValue, loginName, isLoggedIn}){
                            
                             
                         </ul>
-                        <NavButton isLoggedIn={isLoggedIn} />
+                        
                       </div>
                   </div>
                 </div>
@@ -119,9 +119,6 @@ function Navbar({sendSearchValue, loginName, isLoggedIn}){
                         }`}
                     >
                       <ul className="items-center flex justify-between md:flex md:space-x-6 md:space-y-0">
-                          <li>
-                             <NavButton isLoggedIn={isLoggedIn} />
-                          </li>
 
                           {
                                 isLoggedIn ? (

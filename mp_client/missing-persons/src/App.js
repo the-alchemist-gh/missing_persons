@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import ItemCategory from "./components/PersonLocation";
+import Header from "./components/Header";
 import ItemList from "./components/PersonList";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -14,14 +15,16 @@ function App() {
   // let loginRedirect = useNavigate();
   const [logInState, setLogInState] = useState(false);
   const [logInName, setLogInName] = useState("");
+  const [logInId, setLogInId] = useState();
   const [itemState, setItemState] = useState([]);
   const [offerState,setOfferState] = useState([])
   const [searchState, setSearchState] = useState("");
   const [categoryState, setCategoryState] = useState("All");
 
-  function confirmLogin(value, name){
+  function confirmLogin(value, name, id){
     setLogInState(value)
     setLogInName(name)
+    setLogInId(id)
   }
 
   useEffect(()=>{
@@ -90,8 +93,17 @@ function App() {
   return (
     <>
       <Navbar sendSearchValue = {getSearchValue} isLoggedIn={logInState} loginName = {logInName} />
-      {/* <Routes>
-        <Route path="/item/:category/:id" element={<ItemDetails updatedItem={onUpdateItem} offerData = {offerState}/>}></Route>
+      
+      <Routes>
+        <Route path="/item/:category/:id" element={
+          <>
+            <Header />
+            <ItemDetails updatedItem={onUpdateItem} offerData = {offerState}/>
+          </>
+          
+          
+        }>
+        </Route>
         <Route path="/item/add-new" element={<NewItem getFormData={addNewItem} />}>
         </Route>
         <Route path="/register" element={<Register />}>
@@ -99,13 +111,14 @@ function App() {
         <Route path="/login" element={<Login confirmLogin={confirmLogin} />}></Route>
         <Route exact path="/" element={
           <>
-            <ItemCategory sendCategoryValue = {getCategoryValue}  />
-            <ItemList isLoggedIn={logInState} updatedItem={onUpdateItem} offerData = {offerState} itemData = {filteredItemData} />
+            {/* <ItemCategory sendCategoryValue = {getCategoryValue}  /> */}
+            <Header />
+            <ItemList isLoggedIn={logInState} logInId={logInId} updatedItem={onUpdateItem} offerData = {offerState} itemData = {filteredItemData} />
           </>
         }>
         </Route>
       </Routes>
-       */}
+      
     </>
   );
 }
