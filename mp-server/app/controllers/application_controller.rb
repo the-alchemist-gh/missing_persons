@@ -35,4 +35,81 @@
       missing_people.to_json
     end
 
+    post '/users' do
+      users = User.create(
+        name: params[:name],
+        email: params[:email],
+        password: params[:password]
+      )
+      users.to_json
+    end
+
+    post '/last_seens' do
+      last_seens = LastSeen.create(
+        location_seen: params[:location_seen],
+        comments: params[:comments],
+        missing_id: params[:missing_id],
+        user_id: params[:user_id],
+        date_seen: params[:date_seen]
+      )
+      last_seens.to_json
+    end
+
+    patch '/missings/:id' do
+      missing_people = Missing.find(params[:id])
+      missing_people.update(
+        name: params[:name],
+        age: params[:age],
+        description: params[:description],
+        image: params[:image],
+        location: params[:location],
+        date_missing: params[:date_missing],
+        found: params[:found],
+        user_id: params[:user_id]
+      )
+      missing_people.to_json
+    end
+
+    patch '/users/:id' do
+      users= User.find(params[:id])
+      users.update(
+        name: params[:name],
+        email: params[:email],
+        password: params[:password],
+      )
+      users.to_json
+    end
+
+    patch '/last_seens/:id' do
+      reviews= LastSeen.find(params[:id])
+      reviews.update(
+        location_seen: params[:location_seen],
+        comments: params[:comments],
+        missing_id: params[:missing_id],
+        user_id: params[:user_id],
+        date_seen: params[:date_seen]
+      )
+      reviews.to_json
+    end
+
+    delete '/missings/:id' do
+      missing_people = Missing.find(params[:id])
+      missing_people.destroy
+      missing_people.to_json
+    end
+    
+    delete '/users/:id' do
+      user = User.find(params[:id])
+      user.destroy
+      user.to_json
+    end
+
+    delete '/last_seens/:id' do
+      reviews = LastSeen.find(params[:id])
+      reviews.destroy
+      reviews.to_json
+    end
+
+
+
   end
