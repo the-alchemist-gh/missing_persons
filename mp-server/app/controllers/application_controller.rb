@@ -73,7 +73,7 @@
     patch '/users/:id' do
       users= User.find(params[:id])
       users.update(
-       name: params[:name],
+        name: params[:name],
         email: params[:email],
         password: params[:password],
       )
@@ -83,14 +83,33 @@
     patch '/last_seens/:id' do
       reviews= LastSeen.find(params[:id])
       reviews.update(
-       location_seen: params[:location_seen],
+        location_seen: params[:location_seen],
         comments: params[:comments],
         missing_id: params[:missing_id],
-        user_id: params[:user_id]
+        user_id: params[:user_id],
         date_seen: params[:date_seen]
       )
       reviews.to_json
     end
+
+    delete '/missings/:id' do
+      missing_people = Missing.find(params[:id])
+      missing_people.destroy
+      missing_people.to_json
+    end
+    
+    delete '/users/:id' do
+      user = User.find(params[:id])
+      user.destroy
+      user.to_json
+    end
+
+    delete '/last_seens/:id' do
+      reviews = LastSeen.find(params[:id])
+      reviews.destroy
+      reviews.to_json
+    end
+
 
 
   end
