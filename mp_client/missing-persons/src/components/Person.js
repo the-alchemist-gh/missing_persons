@@ -56,7 +56,7 @@ function Item({isLoggedIn, items, updatedItem, offerData, logInId}){
           <img className="h-full w-full object-cover" src={image} alt={name}/>
         </div>
         <div className="py-4 border-b mx-6">
-          <div className="font-bold text-xl mb-2"><NavLink to={`/item/${category}/${id}`}>{name}</NavLink>
+          <div className="font-bold text-xl mb-2"><NavLink to={`/person/${location}/${id}`}>{name}</NavLink>
           <span className="ml-2 text-gray-400 text-xs font-medium ">{age} years</span>
           <p className="mt-2 text-gray-500 text-sm font-medium ">{location}</p>
           </div>

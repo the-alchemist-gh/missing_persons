@@ -3,34 +3,19 @@ import { useParams,NavLink } from "react-router-dom";
 import OfferButton from "./Comments";
 import offerError from "../assets/404.gif";
 
-function ItemDetails({updatedItem, offerData}){
-  const [itemDetail, setItemDetail] = useState({});
-  const [offerDetail, setOfferDetail] = useState([]);
-  const [showOffer, setShowOffer] = useState(false);
+function PersonDetails({updatedItem, commentData}){
+  const [personDetail, setPersonDetail] = useState({});
+  const [commentDetail, setCommentDetail] = useState([]);
+  const [showComment, setShowComment] = useState(false);
 
   const { id } = useParams();
 
   useEffect(() => {
 
-      fetch(`https://swapup-api.herokuapp.com/swaps/${id}`)
+      fetch(`http://localhost:9292/missings/${id}`)
       .then(r => r.json())
       .then(data => {
-        setItemDetail(data);
-        
-        fetch(`https://swapup-api.herokuapp.com/swaps/${id}`,{
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            views: (data.views+1) ,
-          }),
-        })
-        .then(r=>r.json())
-        .then(data2=>{
-          // console.log(data2);
-          setItemDetail(data2);
-        });
+        setPersonDetail(data);
         
       })
   }, [id]);
@@ -40,31 +25,31 @@ function ItemDetails({updatedItem, offerData}){
   // };
 
   function handleLikeBtn(){
-    fetch(`https://swapup-api.herokuapp.com/swaps/${id}`,{
+    fetch(`http://localhost:9292/missings/${id}`,{
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            likes :(itemDetail.likes +1 ),
+            likes :(personDetail.likes +1 ),
           }),
         })
         .then(r=>r.json())
         .then(data3=>{
           updatedItem(data3);
-          setItemDetail(data3);
+          setPersonDetail(data3);
         }
         
         )
   }
   
   function handleShowOffer(){
-    const newOfferData = offerData.filter((offer) => {
-        return (offer.offerFor=== parseInt(id));
+    const newCommentData = commentData.filter((comment) => {
+        return (comment.offerFor=== parseInt(id));
   })
-  setOfferDetail(newOfferData);
+  setCommentDetail(newCommentData);
 
-    setShowOffer(showOffer=>!showOffer)
+    setShowComment(showOffer=>!showOffer)
   }
 
 
@@ -84,21 +69,21 @@ function ItemDetails({updatedItem, offerData}){
               </li>
               <li>
                 <div className="flex items-center">
-                  <p className="mr-2 text-sm font-medium text-gray-300"> {itemDetail.category} </p>
+                  <p className="mr-2 text-sm font-medium text-gray-300"> {personDetail.category} </p>
                   <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-5 text-gray-300">
                     <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
                   </svg>
                 </div>
               </li>
               <li className="text-sm">
-                <NavLink to={`/item/${itemDetail.id}`} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">{itemDetail.name}</NavLink>
+                <NavLink to={`/item/${personDetail.id}`} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">{personDetail.name}</NavLink>
               </li>
             </ol>
           </nav>
 
           <div className="max-w-2xl mx-auto pt-10 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
             <div className="py-10 lg:pt-6 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8 relative">
-              <img src={itemDetail.image_url} alt="Two each of gray, white, and black shirts laying flat." className="w-full h-full rounded-md object-center object-cover"/>
+              <img src={personDetail.image_url} alt="Two each of gray, white, and black shirts laying flat." className="w-full h-full rounded-md object-center object-cover"/>
             </div>
 
             <div className="py-10 lg:pt-6 lg:pr-8">
@@ -106,20 +91,20 @@ function ItemDetails({updatedItem, offerData}){
               <div>
                 <h3 className="sr-only">Description</h3>
                 <div className="space-y-6">
-                  <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{itemDetail.name}</h1>
-                  <p className="text-base text-gray-900">{itemDetail.description}</p>
+                  <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{personDetail.name}</h1>
+                  <p className="text-base text-gray-900">{personDetail.description}</p>
                 </div>
               </div>
               <div className="mt-10">
                 <ul className="flex justify-between text-xs">
-                  <li className="text-gray-400 font-medium "><span>Category : {itemDetail.category}</span></li>
+                  <li className="text-gray-400 font-medium "><span>Category : {personDetail.category}</span></li>
                 </ul>
                 <div className="mt-4">
                   <ul className="flex text-xs justify-between">
                     <li className="text-gray-400 py-2 font-medium">
                       <span className="bg-teal-200 text-teal-800 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
                         {
-                          itemDetail.type === "free" ? "Get Item for Free" : "Up for Swap"
+                          personDetail.type === "free" ? "Get Item for Free" : "Up for Swap"
                         }
                       </span>
                     </li>
@@ -128,12 +113,12 @@ function ItemDetails({updatedItem, offerData}){
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                         <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                       </svg>
-                      {itemDetail.views} views</span></li>
+                      {personDetail.views} views</span></li>
                     <li className="text-gray-400 font-medium" onClick={handleLikeBtn}><span>
                       <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mx-1 text-red-600`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
-                      {itemDetail.likes} Likes</span>
+                      {personDetail.likes} Likes</span>
                     </li>                    
                   </ul>
                 </div>
@@ -142,8 +127,8 @@ function ItemDetails({updatedItem, offerData}){
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">What I need for this Item</h2>
                 <div className="mt-4">
-                    {itemDetail.needs?
-                      itemDetail.needs.map((need,index)=>(
+                    {personDetail.needs?
+                      personDetail.needs.map((need,index)=>(
                         <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2 mb-2">{need}</span>
                       )) : null
                     }
@@ -165,7 +150,7 @@ function ItemDetails({updatedItem, offerData}){
                       View Offers
                       </h4>
                       {
-                        !showOffer ? 
+                        !showComment ? 
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-6" viewBox="0 0 20 20" fill="currentColor">
                               <path fillRule="evenodd" d="M15.707 4.293a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 0zm0 6a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
@@ -176,13 +161,13 @@ function ItemDetails({updatedItem, offerData}){
                       }
                   </div>
                   {
-                    showOffer ? 
+                    showComment ? 
 
                     <div className="border px-4 py-4">
                       {
-                        offerDetail.length>0 ? 
+                        commentDetail.length>0 ? 
                         (
-                          offerDetail.map((gOffer)=>(
+                          commentDetail.map((gOffer)=>(
                             <div key={gOffer.id} className="flex py-2 border-b">
                               <div className="relative md:h-60 w-1/3">
                                 <img className="w-full h-full rounded-md object-center object-cover" src={gOffer.offerImage} alt={gOffer.offerName}/>
@@ -241,4 +226,4 @@ function ItemDetails({updatedItem, offerData}){
   )
 }
 
-export default ItemDetails;
+export default PersonDetails;

@@ -6,8 +6,8 @@ import Header from "./components/Header";
 import ItemList from "./components/PersonList";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import NewItem from "./components/AddMissingPerson";
-import ItemDetails from "./components/PersonDetails";
+import NewPerson from "./components/AddMissingPerson";
+import PersonDetails from "./components/PersonDetails";
 
 // import itemData from "../db.json";
 
@@ -95,16 +95,16 @@ function App() {
       <Navbar sendSearchValue = {getSearchValue} isLoggedIn={logInState} loginName = {logInName} />
       
       <Routes>
-        <Route path="/item/:category/:id" element={
+        <Route path="/person/:location/:id" element={
           <>
-            <Header />
-            <ItemDetails updatedItem={onUpdateItem} offerData = {offerState}/>
+            <Header isLoggedIn={logInState} />
+            <PersonDetails updatedItem={onUpdateItem} offerData = {offerState}/>
           </>
           
           
         }>
         </Route>
-        <Route path="/item/add-new" element={<NewItem getFormData={addNewItem} />}>
+        <Route path="/person/add-new" element={<NewPerson getFormData={addNewItem} logInId={logInId} />}>
         </Route>
         <Route path="/register" element={<Register />}>
         </Route>
@@ -112,7 +112,7 @@ function App() {
         <Route exact path="/" element={
           <>
             {/* <ItemCategory sendCategoryValue = {getCategoryValue}  /> */}
-            <Header />
+            <Header isLoggedIn={logInState} />
             <ItemList isLoggedIn={logInState} logInId={logInId} updatedItem={onUpdateItem} offerData = {offerState} itemData = {filteredItemData} />
           </>
         }>

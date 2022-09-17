@@ -53,9 +53,9 @@ function Login({confirmLogin}){
               <div className="mt-6 text-1xl bg-red-100 rounded-md border-2 border-red-600 text-red-600 text-center">
                   Can't go through the signup hustle? Login with the test credentials below<br></br>
                 <p>Email: <span className="font-bold">ibrahim@gmail.com</span></p>
-                <p>Password: <span className="font-bold">ibrahim@gmail</span></p>
+                <p>Password: <span className="font-bold">ibrahim</span></p>
               </div>
-              <h3 className="text-2xl font-bold text-center text-blue-900">Login</h3>
+              <h3 className="text-2xl mt-2 font-bold text-center text-blue-900">Login</h3>
               <form onSubmit={handleFormSubmit}>
                 <div className="mt-4">
                   <div className="mt-4">
