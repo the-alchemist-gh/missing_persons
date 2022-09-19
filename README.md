@@ -5,7 +5,6 @@ MISSING PERSONS
 •	General Information
 •	Technologies used
 •	Features
-•	Screenshots
 •	Setup
 •	Usage
 •	Project Status
@@ -25,8 +24,12 @@ Tailwind CSS
 Ruby 
 
 FEATURES
+Any body that launches the page would be able to access missing persons but cannot add a missing person.
+Register and Sign In
+Update Missing person on User dashboard
+User able to update comment 
+User able to determine the status of missing persons
 
-SCREENSHOTS
 
 
 SETUP

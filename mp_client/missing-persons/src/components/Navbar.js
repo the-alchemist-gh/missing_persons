@@ -16,7 +16,7 @@ function Navbar({sendSearchValue, loginName, isLoggedIn}){
     window.location.reload();
     loginRedirect("/");
   }
-
+ 
   return (
     <div >
       
