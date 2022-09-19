@@ -1,52 +1,12 @@
-import React,{useState,} from "react";
+import React,{useState} from "react";
 import { NavLink } from "react-router-dom";
 import FoundButton from "./FoundButton";
 
 
-function Item({isLoggedIn, items, updatedItem, offerData, logInId}){
-  const {id,name,description,category,image,location,age,date_missing,found,last_seens, user_id} = items;
-  // const [likeState, setLikeState] = useState(likes);
-  // const [productUpdateState, setProductUpdateState] = useState({});
-  const [btnIcon, setBtnIcon] = useState(false);
+function Item({isLoggedIn, items, updatedItem, logInId}){
+  const {id,name,description,image,location,age,date_missing,last_seens, user_id} = items;
 
-  // function handleClick(){
-  //   if(isLoggedIn){
-  //     setBtnIcon(btnIcon=>!btnIcon)
-  //     if(!btnIcon){
-  //       fetch(`https://swapup-api.herokuapp.com/swaps/${id}`,{
-  //           method: "PATCH",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             likes: (likeState + 1) ,
-  //           }),
-  //         }) 
-  //         .then(r=>r.json())
-  //         .then(data=>{
-  //           updatedItem(data)
-  //           setLikeState(data.likes)
-  //         })
-  //     } else {
-  //       fetch(`https://swapup-api.herokuapp.com/swaps/${id}`,{
-  //         method: "PATCH",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           likes: (likeState - 1) ,
-  //         }),
-  //       }) 
-  //       .then(r=>r.json())
-  //       .then(data=>{
-  //         updatedItem(data)
-  //         setLikeState(data.likes)
-  //       })
-  //     }
-  //   } else {
-  //     alert("Kindly login to Like an Item")
-  //   }    
-  // }
+  const timeStamp = new Date(date_missing).toLocaleDateString('en-US');
 
   return (
     <>
@@ -66,7 +26,7 @@ function Item({isLoggedIn, items, updatedItem, offerData, logInId}){
             
           </p>
           <p className="  bg-red-200 text-red-800 text-xs px-2 inline-block rounded-full font-semibold tracking-wide">
-              went missing on {date_missing}
+              went missing on {timeStamp}
           </p>
         </div>
         <div className="mx-6 pt-4 pb-2 flex justify-between">
@@ -76,7 +36,7 @@ function Item({isLoggedIn, items, updatedItem, offerData, logInId}){
               {
                 isNaN(last_seens.length) ? 
                 <h6 className="flex leading-none align-middle text-grey-700 items-center font-semibold text-sm">
-                  No offers yet
+                  No Comments yet
                 </h6>
                    : 
                     <h6 className="flex leading-none align-middle text-gray-700 bg-gray-100 px-2 py-1 rounded-md items-center font-semibold text-sm">
@@ -94,7 +54,7 @@ function Item({isLoggedIn, items, updatedItem, offerData, logInId}){
             isLoggedIn ? (
 
               logInId===user_id ? (
-                <FoundButton found={found} name={name} />
+                <FoundButton person={items} updatedItem={updatedItem} />
               ):null
 
             ) : (

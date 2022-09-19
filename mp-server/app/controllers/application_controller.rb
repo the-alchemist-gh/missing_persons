@@ -9,6 +9,12 @@
       missing_people.to_json(include: :last_seens)
     end
 
+    get '/missings/:id' do
+      # "Hello"
+      missing_people = Missing.find(params[:id])
+      missing_people.to_json(include: :last_seens)
+    end
+
     get '/users' do
       # "Hello"
       user = User.all.order(:created_at)
@@ -18,7 +24,7 @@
     get '/last_seens' do
       # "Hello"
       last_seen = LastSeen.all.order(:created_at)
-      last_seen.to_json
+      last_seen.to_json(include:[:missing, :user])
     end
 
     post '/missings' do

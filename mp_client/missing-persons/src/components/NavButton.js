@@ -6,7 +6,7 @@ function NavButton({isLoggedIn}){
 
   function handleAddItem(){
     isLoggedIn ? (
-    loginRedirect("/item/add-new")
+    loginRedirect("/person/add-new")
     ):(
       alert("Kindly login to report a missing person")
     )

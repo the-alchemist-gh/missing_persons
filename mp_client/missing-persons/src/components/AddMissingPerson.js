@@ -45,13 +45,12 @@ function NewPerson({getFormData, logInId}){
     })
     .then(r=>r.json())
     .then(data=>{
-      
       getFormData(data)
-      navigate(`/item/${data.location}/${data.id}`)    
+      navigate(`/person/${data.location}/${data.id}`)    
     })
   }
 
-
+ 
   return (
     <>
           <div className="flex items-center justify-center content-center bg-gray-100">
@@ -81,7 +80,7 @@ function NewPerson({getFormData, logInId}){
                   </div>
                   <div className="mt-4">
                     <label for="locations" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Where did you last see this person</label>
-                    <select id="categories" required defaultValue="Select location" name="location" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="categories" required defaultValue="Select location" name="location" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                       <option value="">Select location</option>
                       <option value="Adenta">Adenta</option>
                       <option value="Madina">Madina</option>
@@ -92,10 +91,10 @@ function NewPerson({getFormData, logInId}){
                       <option value="Accra">Kumasi</option>
                       <option value="Accra">Cape Coast</option>
                     </select>
-                  </div>
+                  </div>  
                   <div className="mt-4">
                     <label for="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Describe the missing person</label>
-                    <textarea id="description" rows="3" name="description" onChange={handleChange}  value={personFormData.description} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg, Very skinny, was wearing a black long dress"></textarea>
+                    <textarea id="description" rows="3" name="description" onChange={handleChange}  value={personFormData.description} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" placeholder="Eg, Very skinny, was wearing a black long dress"></textarea>
                   </div>
                   <div className="mt-4 flex justify-between">
                     <div className="w-3/5">
@@ -119,7 +118,7 @@ function NewPerson({getFormData, logInId}){
             </div>
           </div>
     </>
-  )
+  ) 
 }
 
 export default NewPerson

@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/NavBar";
-import ItemCategory from "./components/PersonLocation";
 import Header from "./components/Header";
 import ItemList from "./components/PersonList";
 import Login from "./components/Login";
@@ -9,17 +8,15 @@ import Register from "./components/Register";
 import NewPerson from "./components/AddMissingPerson";
 import PersonDetails from "./components/PersonDetails";
 
-// import itemData from "../db.json";
 
 function App() {
-  // let loginRedirect = useNavigate();
   const [logInState, setLogInState] = useState(false);
   const [logInName, setLogInName] = useState("");
   const [logInId, setLogInId] = useState();
   const [itemState, setItemState] = useState([]);
-  const [offerState,setOfferState] = useState([])
+  const [commentState,setCommentState] = useState([])
   const [searchState, setSearchState] = useState("");
-  const [categoryState, setCategoryState] = useState("All");
+  
 
   function confirmLogin(value, name, id){
     setLogInState(value)
@@ -33,27 +30,21 @@ function App() {
       .then(r=> r.json())
       .then((data)=>{
 
-      // fetch("https://swapup-api.herokuapp.com/offers")
-      // .then(resp=>resp.json())
-      // .then(offerData=>{
-      //   setOfferState(offerData)
-      // })
-        setItemState(data)
-        console.log(data)
+      fetch("http://localhost:9292/last_seens")
+      .then(resp=>resp.json())
+      .then(commentData=>{
+        setCommentState(commentData)
       })
-    // ) : (
-    //   window.location.pathname !== "/register" ? loginRedirect("/login") : loginRedirect("/register")
-      
-    // )
+        setItemState(data)
+      })
   },[])
 
-  // console.log(window.location.href); 
-  // console.log(window.location.pathname); 
+  function addNewComment(value){
+    setCommentState([...commentState, value])
+  }
+
   function getSearchValue(value){
     setSearchState(value);
-  }
-  function getCategoryValue(value){
-    setCategoryState(value);
   }
 
   function onUpdateItem(value){
@@ -74,20 +65,9 @@ function App() {
 
     const filteredItemData = itemState.filter((item)=>{
 
-      if (categoryState === "All" && searchState === '') return true;
+      if (!item.found && searchState === '') return true;
 
-      if (categoryState === item.category && searchState === '') return true;
-
-      if (categoryState === "All" && (item.name.toLowerCase().includes(searchState.toLowerCase()))) return true;
-
-      return ((item.category === categoryState) && (item.name.toLowerCase().includes(searchState.toLowerCase())));
-      // return (
-      //     item.name.toLowerCase().includes(searchState.toLowerCase()) ? true : (
-      //       item.category === categoryState ? true : null
-      //     )
-      // )
-      
-      // return (item.category !== "All")
+      return (!item.found && (item.name.toLowerCase().includes(searchState.toLowerCase())));
     })
 
   return (
@@ -98,7 +78,7 @@ function App() {
         <Route path="/person/:location/:id" element={
           <>
             <Header isLoggedIn={logInState} />
-            <PersonDetails updatedItem={onUpdateItem} offerData = {offerState}/>
+            <PersonDetails updatedItem={onUpdateItem} getCommentFormData={addNewComment} commentData = {commentState} isLoggedIn={logInState} logInId={logInId}/>
           </>
           
           
@@ -111,9 +91,8 @@ function App() {
         <Route path="/login" element={<Login confirmLogin={confirmLogin} />}></Route>
         <Route exact path="/" element={
           <>
-            {/* <ItemCategory sendCategoryValue = {getCategoryValue}  /> */}
             <Header isLoggedIn={logInState} />
-            <ItemList isLoggedIn={logInState} logInId={logInId} updatedItem={onUpdateItem} offerData = {offerState} itemData = {filteredItemData} />
+            <ItemList isLoggedIn={logInState} logInId={logInId} updatedItem={onUpdateItem} commentData = {commentState} itemData = {filteredItemData} />
           </>
         }>
         </Route>
