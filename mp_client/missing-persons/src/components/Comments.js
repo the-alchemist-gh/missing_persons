@@ -33,7 +33,7 @@ function Comments({ onUpdateComment, comments1, isLoggedIn,logInId, onCommentDel
                           ) : (
                             <div>
                               <p>{comments1.comments}</p>
-                              <h2 className="text-xs text-gray-400">Posted by {comments1.user.name}</h2>
+                              {/* <h2 className="text-xs text-gray-400">Posted by {comments1.user.name}</h2> */}
                             </div>
                           )
                         }

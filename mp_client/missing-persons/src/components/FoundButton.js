@@ -50,9 +50,7 @@ function FoundButton({person, updatedItem}){
   return (
     <>
       <button type="button" onClick={handleClick} className={`inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-gray-900 bg-blue-900`}>
-        {
-          foundState === true ? `has been found` : `User Found`
-        }
+        Person Found
       </button>
     </>
   )
